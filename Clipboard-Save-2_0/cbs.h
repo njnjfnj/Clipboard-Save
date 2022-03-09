@@ -6,24 +6,24 @@
 class CBS : public QWidget {
     Q_OBJECT
 private:
-    QDateEdit* dateLine;
-    CBIListModel* model;
-    CBIListView* list;
-    QDir d;
-    QString path;
-    QSystemTrayIcon* tray;
-    QMenu* trayMenu;
-    bool isNotify;
-    QAction* quitWindow;
+    QDateEdit*          dateLine;
+    CBIListModel*       model;
+    CBIListView*        list;
+    QDir                d;
+    QString             path;
+    QSystemTrayIcon*    tray;
+    QMenu*              trayMenu;
+    bool                isNotify;
+    QAction*            quitWindow;
 
 protected:
-    virtual void closeEvent(QCloseEvent*);
+    virtual void closeEvent (QCloseEvent*);
 public:
-    explicit CBS(QWidget *parent = nullptr);
+    explicit CBS            (QWidget *parent = nullptr);
 public slots:
-    void slotDataChanged();
-    void slotShowHideWindow();
-    void slotOnOffNotify();
+    void slotDataChanged    ();
+    void slotShowHideWindow ();
+    void slotOnOffNotify    ();
 };
 
 #endif // CBS_H

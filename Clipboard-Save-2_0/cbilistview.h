@@ -5,16 +5,16 @@
 
 class CBIListView : public QListView {
     Q_OBJECT
-    QMenu* m;
-    CBIListModel* CBIModel;
+    QMenu*          m;
+    CBIListModel*   CBIModel;
 public:
-    CBIListView(CBIListModel* model, QWidget* qw = NULL);
+    CBIListView                     (CBIListModel* model, QWidget* qw = NULL);
 
-    virtual void contextMenuEvent(QContextMenuEvent* ev) override;
-    void keyPressEvent(QKeyEvent* ev) override;
+    virtual void contextMenuEvent   (QContextMenuEvent* ev) override;
+    void keyPressEvent              (QKeyEvent* ev) override;
 public slots:
-    void slotMenuTriggered(QAction* ac);
-    void slotItemDoubleClicked(const QModelIndex& index);
+    void slotMenuTriggered          (QAction* ac);
+    void slotItemDoubleClicked      (const QModelIndex& index);
 };
 
 #endif // CBILISTVIEW_H

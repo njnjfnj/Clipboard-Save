@@ -5,13 +5,13 @@
 
 class CBI {
 Q_GADGET
-    QTime t;
+    QTime   t;
     QString data;
 public:
-    CBI();
-    CBI(QString copyData, QTime copyTime);
+    CBI         ();
+    CBI         (QString copyData, QTime copyTime);
 
-    QTime Time() const;
+    QTime Time  () const;
     QString Data() const;
 
     friend bool operator == (const CBI& first, const CBI& second);
