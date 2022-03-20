@@ -1,0 +1,5 @@
+ connect(qApp->clipboard(), &QClipboard::dataChanged, this, &CBS::slotDataChanged);
+    connect(dateLine, &QDateEdit::dateChanged, model, &CBIListModel::slotDateChanged);
+
+    QAction* showHide = new QAction("Show/Hide Window", this);
+    connect(showHide, &QAct

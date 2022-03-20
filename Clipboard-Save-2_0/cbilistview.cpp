@@ -2,6 +2,7 @@
 
 CBIListView::CBIListView(CBIListModel* model, QWidget* qw) : QListView(qw) {
     m = new QMenu(this);
+    msg = new QMessageBox;
     CBIModel = model;
     setModel(CBIModel);
 
@@ -42,12 +43,13 @@ void CBIListView::slotMenuTriggered(QAction* ac) {
         delete vbl;
     } else if (i == "Copy") {
         qApp->clipboard()->setText(CBIModel->getCBI(currentIndex()).Data());
-    } else if (i == "Delete" && QMessageBox::warning
+    } else if (i == "Delete" && msg->warning
                (0, "Warning", "The text will be deleted permanently!\nDo you want to delete?",
                 QMessageBox::Yes | QMessageBox::No,
                 QMessageBox::No
                 ) == QMessageBox::Yes) {
         CBIModel->deleteCBI(currentIndex().row());
+        msg->close();
     }
 }
 
@@ -65,4 +67,8 @@ void CBIListView::keyPressEvent(QKeyEvent *ev) {
 
 void CBIListView::contextMenuEvent(QContextMenuEvent* ev) {
     m->exec(ev->globalPos());
+}
+
+void CBIListView::mouseDoubleClickEvent(QMouseEvent *ev) {
+    parentWidget()->hide();
 }

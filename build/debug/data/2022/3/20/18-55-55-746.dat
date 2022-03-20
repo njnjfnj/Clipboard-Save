@@ -1,0 +1,22 @@
+CBIListModel::CBIListModel(const QDate& copyDate, QObject* obj) : QAbstractListModel(obj){
+    path = QApplication::applicationDirPath() + '/' + "data" + '/' +
+           QString::number(copyDate.year()) + '/' +
+           QString::number(copyDate.month()) + '/' +
+           QString::number(copyDate.day());
+
+    update();
+}
+
+QVariant CBIListModel::data(const QModelIndex& index, int role) const {
+    if(!index.isValid() || index.row() < 0 || index.row() > mList.size()) return QVariant();
+    return (role == Qt::DisplayRole || role == Qt::EditRole) ? mList.at(index.row()) : QVariant();
+}
+
+bool CBIListModel::setData(const QModelIndex &index, const QVariant& data, int role) {
+    if(index.isValid() && role == Qt::EditRole){
+        mList[index.row()] = data.toString();
+        emit dataChanged(index, index);
+        return true;
+    }
+    return false;
+}

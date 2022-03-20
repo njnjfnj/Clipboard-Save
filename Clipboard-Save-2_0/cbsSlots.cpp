@@ -19,8 +19,9 @@ void CBS::slotDataChanged() {
     if(isNotify) QApplication::beep();
 }
 
-void CBS::slotShowHideWindow(){
-    setVisible(!isVisible());
-    !isVisible() ? trayMenu->addAction(quitWindow): trayMenu->removeAction(quitWindow);
-}
+void CBS::slotShowHideWindow(){ setVisible(!isVisible()); }
 void CBS::slotOnOffNotify() { isNotify = !isNotify; }
+
+void CBS::slotMenuTriggered(QAction* a) {
+    if(a->text() == "hide window") hide();
+}

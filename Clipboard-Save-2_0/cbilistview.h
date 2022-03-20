@@ -7,14 +7,16 @@ class CBIListView : public QListView {
     Q_OBJECT
     QMenu*          m;
     CBIListModel*   CBIModel;
+    QMessageBox* msg;
 public:
     CBIListView                     (CBIListModel* model, QWidget* qw = NULL);
-
-    virtual void contextMenuEvent   (QContextMenuEvent* ev) override;
-    void keyPressEvent              (QKeyEvent* ev) override;
+protected:
+    virtual void contextMenuEvent       (QContextMenuEvent*) override;
+    virtual void keyPressEvent          (QKeyEvent*) override;
+    virtual void mouseDoubleClickEvent  (QMouseEvent*) override;
 public slots:
-    void slotMenuTriggered          (QAction* ac);
-    void slotItemDoubleClicked      (const QModelIndex& index);
+    void slotMenuTriggered          (QAction*);
+    void slotItemDoubleClicked      (const QModelIndex&);
 };
 
 #endif // CBILISTVIEW_H
