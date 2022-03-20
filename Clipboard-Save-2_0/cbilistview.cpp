@@ -13,6 +13,7 @@ CBIListView::CBIListView(CBIListModel* model, QWidget* qw) : QListView(qw) {
 
     connect(m, &QMenu::triggered, this, &CBIListView::slotMenuTriggered);
     connect(this, &CBIListView::doubleClicked, this, &CBIListView::slotItemDoubleClicked);
+    setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 }
 
 
@@ -70,5 +71,6 @@ void CBIListView::contextMenuEvent(QContextMenuEvent* ev) {
 }
 
 void CBIListView::mouseDoubleClickEvent(QMouseEvent *ev) {
+    Q_UNUSED(ev)
     parentWidget()->hide();
 }

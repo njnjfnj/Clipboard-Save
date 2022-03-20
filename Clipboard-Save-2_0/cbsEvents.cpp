@@ -12,6 +12,9 @@ void CBS::paintEvent(QPaintEvent *ev) {
     QPainterPath path;
     path.addRoundedRect(QRect(0, 0, width(), height()), 5, 5);
     p.fillPath(path, QColor(0, 0, 0, 67));
+    path.clear();
+    path.addRoundedRect(QRect(0, 0, width(), 50), 5, 5);
+    p.fillPath(path, QColor(157, 26, 31, 255));
 }
 
 void CBS::mousePressEvent(QMouseEvent *ev) {
