@@ -24,53 +24,53 @@ void CBIListView::slotItemDoubleClicked(const QModelIndex& index) {
 
 void CBIListView::slotMenuTriggered(QAction* ac) {
     QString i = ac->text(); // info of clicked action
-    if(i == "Info..."){
-        QDialog dio(NULL, Qt::WindowCloseButtonHint);
+    if(currentIndex().isValid()){
+        if(i == "Info..."){
+            QDialog dio(NULL, Qt::WindowCloseButtonHint);
 
-        QTextEdit* txt = new QTextEdit;
-        QLabel* lbl = new QLabel(CBIModel->getCBI(currentIndex()).Time().toString("hh:mm"));
+            QTextEdit txt;
+            QLabel lbl(CBIModel->getCBI(currentIndex()).Time().toString("hh:mm"));
 
-        txt->setReadOnly(true);
-        txt->setText(CBIModel->getCBI(currentIndex()).Data());
+            txt.setReadOnly(true);
+            txt.setText(CBIModel->getCBI(currentIndex()).Data());
 
-        QVBoxLayout* vbl = new QVBoxLayout;
-        vbl->addWidget(txt);
-        vbl->addWidget(lbl);
-        dio.setLayout(vbl);
-        dio.exec();
-
-        delete txt;
-        delete lbl;
-        delete vbl;
-    } else if (i == "Copy") {
-        qApp->clipboard()->setText(CBIModel->getCBI(currentIndex()).Data());
-    } else if (i == "Delete" && msg->warning
-               (0, "Warning", "The text will be deleted permanently!\nDo you want to delete?",
-                QMessageBox::Yes | QMessageBox::No,
-                QMessageBox::No
-                ) == QMessageBox::Yes) {
-        CBIModel->deleteCBI(currentIndex().row());
-        msg->close();
+            QVBoxLayout vbl;
+            vbl.addWidget(&txt);
+            vbl.addWidget(&lbl);
+            dio.setLayout(&vbl);
+            dio.exec();
+            dio.done(0);
+        } else if (i == "Copy") {
+            qApp->clipboard()->setText(CBIModel->getCBI(currentIndex()).Data());
+        } else if (i == "Delete") {
+            CBIModel->deleteCBI(currentIndex().row());
+        }
     }
 }
 
 
 // Events
 void CBIListView::keyPressEvent(QKeyEvent *ev) {
-    if(ev->key() == Qt::Key_Delete && currentIndex().isValid() && QMessageBox::warning
-            (0, "Warning", "The text will be deleted permanently!\nDo you want to delete?",
-             QMessageBox::Yes | QMessageBox::No,
-             QMessageBox::No
-             ) == QMessageBox::Yes){
+    if(ev->modifiers() == Qt::Key_Shift && ev->key() == Qt::Key_Delete && currentIndex().isValid()){
         CBIModel->deleteCBI(currentIndex().row());
+    } else if( ev->key() == Qt::Key_Return &&  currentIndex().isValid())  {
+        qApp->clipboard()->setText(CBIModel->getCBI(currentIndex()).Data());
+    } else if(ev->key() == Qt::Key_Up && currentIndex().isValid() && currentIndex().row() != 0) {
+        setCurrentIndex(CBIModel->index(currentIndex().row() - 1, 0));
+    } else if(ev->key() == Qt::Key_Down && currentIndex().isValid() && currentIndex().row() < CBIModel->Size()){
+        setCurrentIndex(CBIModel->index(currentIndex().row() + 1, 0));
+    } else if(ev->key() == Qt::Key_Up && !currentIndex().isValid() && !CBIModel->isEmpty()) {
+        setCurrentIndex(CBIModel->index(CBIModel->Size() - 1, 0));
     }
+    delete ev;
 }
 
 void CBIListView::contextMenuEvent(QContextMenuEvent* ev) {
     m->exec(ev->globalPos());
+    delete ev;
 }
 
 void CBIListView::mouseDoubleClickEvent(QMouseEvent *ev) {
-    Q_UNUSED(ev)
-    parentWidget()->hide();
+    if(currentIndex().isValid()) qApp->clipboard()->setText(CBIModel->getCBI(currentIndex()).Data());
+    delete ev;
 }

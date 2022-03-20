@@ -25,3 +25,9 @@ void CBS::slotOnOffNotify() { isNotify = !isNotify; }
 void CBS::slotMenuTriggered(QAction* a) {
     if(a->text() == "hide window") hide();
 }
+
+void CBS::slotOverOtherApps() {
+    isOverOtherApps = !isOverOtherApps;
+    setWindowFlag(Qt::WindowStaysOnTopHint, isOverOtherApps);
+    show();
+}

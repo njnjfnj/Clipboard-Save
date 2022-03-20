@@ -1,9 +1,0 @@
-
-}
-
-void CBS::mouseMoveEvent(QMouseEvent *ev) {
-    if(ch.chek && ev->buttons() == Qt::LeftButton) setGeometry(ev->globalX() - ch.posx, ev->globalY() - ch.posy, width(), height());
-}
-
-void CBS::contextMenuEvent(QContextMenuEvent *ev) {
-    m->exec(ev->globalPos());

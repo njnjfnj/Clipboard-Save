@@ -1,0 +1,8 @@
+   dio.done(0);
+        } else if (i == "Copy") {
+            qApp->clipboard()->setText(CBIModel->getCBI(currentIndex()).Data());
+        } else if (i == "Delete") {
+            CBIModel->deleteCBI(currentIndex().row());
+        }
+    }
+    delete ac;

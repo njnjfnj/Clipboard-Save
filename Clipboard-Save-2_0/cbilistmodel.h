@@ -25,6 +25,9 @@ public:
     bool addCBI         (const CBI& item);
 
     CBI getCBI          (const QModelIndex& index);
+    int Size            ();
+
+    bool isEmpty        ();
 
 public slots:
     void slotDateChanged(const QDate& newDate);

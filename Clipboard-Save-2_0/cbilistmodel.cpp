@@ -113,6 +113,10 @@ bool CBIListModel::addCBI(const CBI &item) {
 
 CBI CBIListModel::getCBI(const QModelIndex& index) { return CBIList.at(index.row()); }
 
+int CBIListModel::Size() { return CBIList.size(); }
+
+bool CBIListModel::isEmpty() { return CBIList.isEmpty(); }
+
 // slots
 void CBIListModel::slotDateChanged(const QDate &newDate) {
     path = QApplication::applicationDirPath() + '/' + "data" + '/' +

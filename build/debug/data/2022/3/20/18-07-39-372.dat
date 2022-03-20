@@ -1,5 +1,0 @@
-   quitWindow = new QAction("Quit", this);
-    connect(quitWindow, &QAction::triggered, qApp, &QApplication::quit);
-
-    trayMenu = new QMenu(this);
-    trayMenu->

@@ -5,6 +5,7 @@ CBS::CBS(QWidget *parent) : QWidget(parent) {
     dateLine = new QDateEdit(QDate::currentDate());
     list = new CBIListView(model);
     isNotify = true;
+    isOverOtherApps = false;
 
     path = QApplication::applicationDirPath() + '/' + "data" + '/' +
            QString::number(QDate::currentDate().year()) + '/' +
@@ -21,10 +22,13 @@ CBS::CBS(QWidget *parent) : QWidget(parent) {
     connect(onOffNotify, &QAction::triggered, this, &CBS::slotOnOffNotify);
     quitWindow = new QAction("Close", this);
     connect(quitWindow, &QAction::triggered, qApp, &QApplication::quit);
+    QAction* setOverOtherApps = new QAction("+/- on top function");
+    connect(setOverOtherApps, &QAction::triggered, this, &CBS::slotOverOtherApps);
 
     trayMenu = new QMenu(this);
     trayMenu->addAction(showHide);
     trayMenu->addAction(onOffNotify);
+    trayMenu->addAction(setOverOtherApps);
     trayMenu->addSeparator();
     trayMenu->addAction(quitWindow);
 
@@ -34,6 +38,8 @@ CBS::CBS(QWidget *parent) : QWidget(parent) {
     tray->show();
 
     m = new QMenu(this);
+    m->addAction(setOverOtherApps);
+    m->addSeparator();
     m->addAction("hide window");
     m->addSeparator();
     m->addSeparator();
@@ -49,6 +55,7 @@ CBS::CBS(QWidget *parent) : QWidget(parent) {
     setGeometry(-1, 30, 300, 370);
     setWindowTitle("Clipboard-Save");
     setToolTip("double click = hide window");
+    list->setToolTip("Double click or ENTER = copy item");
 
     setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground, 1);

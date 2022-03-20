@@ -15,6 +15,7 @@ private:
     QMenu*              trayMenu;
     QMenu*              m;
     bool                isNotify;
+    bool                isOverOtherApps;
     QAction*            quitWindow;
 
     struct chekMouse {
@@ -38,6 +39,7 @@ public slots:
     void slotDataChanged    ();
     void slotShowHideWindow ();
     void slotOnOffNotify    ();
+    void slotOverOtherApps  ();
     void slotMenuTriggered  (QAction*);
 };
 
