@@ -1,0 +1,16 @@
+QMenu::triggered, this, &CBS::slotMenuTriggered);
+
+    QVBoxLayout* vbl = new QVBoxLayout;
+    vbl->addWidget(list);
+    vbl->addWidget(dateLine);
+    setLayout(vbl);
+
+    setWindowIcon(QPixmap(QApplication::applicationDirPath() + '/' + "ico.png"));
+    setGeometry(-1, 30, 300, 370);
+    setWindowTitle("Clipboard-Save");
+    setToolTip("double click = hide window");
+    list->setToolTip("Double click or ENTER = copy item");
+
+    setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+    setAttribute(Qt::WA_TranslucentBackground, 1);
+}

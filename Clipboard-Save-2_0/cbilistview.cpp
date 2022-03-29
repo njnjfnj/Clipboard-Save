@@ -1,8 +1,7 @@
-#include "cbilistview.h"
+#include "cbs.h"
 
 CBIListView::CBIListView(CBIListModel* model, QWidget* qw) : QListView(qw) {
     m = new QMenu(this);
-    msg = new QMessageBox;
     CBIModel = model;
     setModel(CBIModel);
 
@@ -14,6 +13,10 @@ CBIListView::CBIListView(CBIListModel* model, QWidget* qw) : QListView(qw) {
     connect(m, &QMenu::triggered, this, &CBIListView::slotMenuTriggered);
     connect(this, &CBIListView::doubleClicked, this, &CBIListView::slotItemDoubleClicked);
     setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+}
+
+CBIListView::~CBIListView() {
+    delete m;
 }
 
 
@@ -51,7 +54,7 @@ void CBIListView::slotMenuTriggered(QAction* ac) {
 
 // Events
 void CBIListView::keyPressEvent(QKeyEvent *ev) {
-    if(ev->modifiers() == Qt::Key_Shift && ev->key() == Qt::Key_Delete && currentIndex().isValid()){
+    if(ev->key() == Qt::Key_Delete && currentIndex().isValid()){
         CBIModel->deleteCBI(currentIndex().row());
     } else if( ev->key() == Qt::Key_Return &&  currentIndex().isValid())  {
         qApp->clipboard()->setText(CBIModel->getCBI(currentIndex()).Data());
@@ -61,16 +64,18 @@ void CBIListView::keyPressEvent(QKeyEvent *ev) {
         setCurrentIndex(CBIModel->index(currentIndex().row() + 1, 0));
     } else if(ev->key() == Qt::Key_Up && !currentIndex().isValid() && !CBIModel->isEmpty()) {
         setCurrentIndex(CBIModel->index(CBIModel->Size() - 1, 0));
+    } else if(ev->key() == Qt::Key_Escape) {
+        parentWidget()->hide();
+    } else if(ev->key() == Qt::Key_Escape){
+        static_cast<CBS>(parentWidget()).hide();
     }
-    delete ev;
 }
 
 void CBIListView::contextMenuEvent(QContextMenuEvent* ev) {
     m->exec(ev->globalPos());
-    delete ev;
 }
 
 void CBIListView::mouseDoubleClickEvent(QMouseEvent *ev) {
+    Q_UNUSED(ev)
     if(currentIndex().isValid()) qApp->clipboard()->setText(CBIModel->getCBI(currentIndex()).Data());
-    delete ev;
 }

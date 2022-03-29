@@ -8,8 +8,8 @@ Q_GADGET
     QTime   t;
     QString data;
 public:
-    CBI         ();
-    CBI         (QString copyData, QTime copyTime);
+    explicit CBI         ();
+    explicit CBI         (QString copyData, QTime copyTime);
 
     QTime Time  () const;
     QString Data() const;

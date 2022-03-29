@@ -1,7 +1,7 @@
 #include "cbilistmodel.h"
 
 CBIListModel::CBIListModel(const QDate& copyDate, QObject* obj) : QAbstractListModel(obj){
-    path = QApplication::applicationDirPath() + '/' + "data" + '/' +
+    path = APPDIR + '/' + "data" + '/' +
            QString::number(copyDate.year()) + '/' +
            QString::number(copyDate.month()) + '/' +
            QString::number(copyDate.day());
@@ -74,18 +74,20 @@ beginResetModel();
         QString temp = CBIList.front().Data();
         if(temp.size() > 100) temp.resize(100);
         mList.push_front(temp);
+        f.close();
     }
 
 endResetModel();
 }
 
 void CBIListModel::deleteCBI(const int& indexRow) {
-    beginRemoveRows(QModelIndex(), indexRow, 0);
+    beginRemoveRows(QModelIndex(), indexRow, -1);
 
     mList.removeAt(indexRow);
     QFile f(path + '/' + CBIList.at(indexRow).Time().toString(DATE_FORMAT) + ".dat");
     f.remove();
     CBIList.removeAt(indexRow);
+    f.close();
 
     endRemoveRows();
 }

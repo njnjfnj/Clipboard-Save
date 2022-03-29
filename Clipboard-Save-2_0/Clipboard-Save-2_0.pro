@@ -20,7 +20,6 @@ SOURCES += \
 HEADERS += \
     cbi.h \
     cbilistmodel.h \
-    cbilistview.h \
     cbs.h
 
 # Default rules for deployment.

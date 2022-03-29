@@ -1,0 +1,11 @@
+CBS::CBS(QWidget *parent) : QWidget(parent) {
+    model = new CBIListModel(QDate::currentDate());
+    dateLine = new QDateEdit(QDate::currentDate());
+    isNotify = true;
+    list = new CBIListView(model, isNotify);
+    isOverOtherApps = false;
+
+    path = QApplication::applicationDirPath() + '/' + "data" + '/' +
+           QString::number(QDate::currentDate().year()) + '/' +
+           QString::number(QDate::currentDate().month()) + '/' +
+           QString::

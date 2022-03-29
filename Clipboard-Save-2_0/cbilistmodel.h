@@ -3,11 +3,12 @@
 
 #include "cbi.h"
 #define DATE_FORMAT "hh-mm-ss-zzz"
+#define APPDIR QApplication::applicationDirPath()
 
 class CBIListModel : public QAbstractListModel {
 Q_OBJECT
 public:
-    CBIListModel        (const QDate& copyDate, QObject* obj = nullptr);
+    explicit CBIListModel        (const QDate& copyDate, QObject* obj = nullptr);
 
     QVariant data       (const QModelIndex& index, int role) const;
     bool setData        (const QModelIndex& index, const QVariant& data, int role);

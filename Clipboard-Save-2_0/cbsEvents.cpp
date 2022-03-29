@@ -7,7 +7,8 @@ void CBS::closeEvent(QCloseEvent *ev){
 
 void CBS::paintEvent(QPaintEvent *ev) {
     Q_UNUSED(ev)
-    QPainter p(this);
+    QPainter p;
+    p.begin(this);
     p.setRenderHint(QPainter::Antialiasing);
     QPainterPath path;
     path.addRoundedRect(QRect(0, 0, width(), height()), 5, 5);
@@ -15,6 +16,7 @@ void CBS::paintEvent(QPaintEvent *ev) {
     path.clear();
     path.addRoundedRect(QRect(0, 0, width(), 50), 5, 5);
     p.fillPath(path, QColor(157, 26, 31, 255));
+    p.end();
 }
 
 void CBS::mousePressEvent(QMouseEvent *ev) {
@@ -34,3 +36,4 @@ void CBS::mouseDoubleClickEvent(QMouseEvent *ev) {
     Q_UNUSED(ev)
     hide();
 }
+

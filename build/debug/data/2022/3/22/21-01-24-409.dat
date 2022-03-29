@@ -1,0 +1,17 @@
+
+    tray = new QSystemTrayIcon(QIcon(QPixmap(QApplication::applicationDirPath() + '/' + "ico.png")), this);
+    tray->setContextMenu(trayMenu);
+    tray->setToolTip("Clipboard-Save Tray");
+    tray->show();
+
+    m = new QMenu(this);
+    m->addAction(onOffNotify);
+    m->addAction(setOverOtherApps);
+    m->addSeparator();
+    m->addAction("hide window");
+    m->addSeparator();
+    m->addSeparator();
+    m->addAction(quitWindow);
+    connect(m, &QMenu::triggered, this, &CBS::slotMenuTriggered);
+
+    QVBoxLayout* vbl = ne
