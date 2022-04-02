@@ -4,8 +4,8 @@
 void CBS::slotDataChanged() {
     d.setPath(path);
     CBI item;
-
     int count = 0;
+
     foreach(QChar i, item.Data()){ if(i == ' ') ++count; }
     if(count == item.Data().size()) return void();
 

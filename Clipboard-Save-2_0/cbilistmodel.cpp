@@ -1,7 +1,7 @@
 #include "cbilistmodel.h"
 
 CBIListModel::CBIListModel(const QDate& copyDate, QObject* obj) : QAbstractListModel(obj){
-    path = APPDIR + '/' + "data" + '/' +
+    path = APPDIR + "/data/" +
            QString::number(copyDate.year()) + '/' +
            QString::number(copyDate.month()) + '/' +
            QString::number(copyDate.day());
@@ -69,11 +69,14 @@ beginResetModel();
     foreach(QString file, pathList) {
         QFile f(d.absoluteFilePath(file));
         f.open(QIODevice::ReadOnly);
+
         file.resize(file.size() - 4);
         CBIList.push_front(CBI(f.readAll(), QTime::fromString(file, DATE_FORMAT)));
+
         QString temp = CBIList.front().Data();
         if(temp.size() > 100) temp.resize(100);
         mList.push_front(temp);
+
         f.close();
     }
 
@@ -94,11 +97,7 @@ void CBIListModel::deleteCBI(const int& indexRow) {
 
 bool CBIListModel::addCBI(const CBI &item) {
 
-    foreach(CBI i, CBIList) {
-        if(i == item) {
-            return false;
-        }
-    }
+    foreach(CBI i, CBIList) { if(i == item) { return false; } }
 
     beginInsertRows(QModelIndex(), 0, 1);
     CBIList.push_front(item);
@@ -121,7 +120,7 @@ bool CBIListModel::isEmpty() { return CBIList.isEmpty(); }
 
 // slots
 void CBIListModel::slotDateChanged(const QDate &newDate) {
-    path = QApplication::applicationDirPath() + '/' + "data" + '/' +
+    path = APPDIR + "/data/" +
            QString::number(newDate.year()) + '/' +
            QString::number(newDate.month()) + '/' +
            QString::number(newDate.day());

@@ -40,10 +40,11 @@ protected:
     virtual void mouseMoveEvent         (QMouseEvent*               ) override;
     virtual void paintEvent             (QPaintEvent*               ) override;
     virtual void contextMenuEvent       (QContextMenuEvent *event   ) override;
-    virtual void mouseDoubleClickEvent  (QMouseEvent *event         ) override;
 public:
     explicit CBS (QWidget *parent = nullptr);
     ~CBS();
+    void NextBackDay    (bool);
+    void setCurrentDate (    );
 public slots:
     void slotDataChanged    (       );
     void slotShowHideWindow (       );

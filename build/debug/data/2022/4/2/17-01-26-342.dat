@@ -1,0 +1,13 @@
+  QVBoxLayout *vbl = new QVBoxLayout;
+            vbl->addWidget(txt);
+            vbl->addWidget(lbl);
+            dio->setLayout(vbl);
+            dio->exec();
+
+            delete txt;
+            delete lbl;
+            delete vbl;
+            delete dio;
+        } else if (i == "Copy") {
+            qApp->clipboard()->setText(CBIModel->getCBI(currentIndex()).Data());
+        } else if (i == "Del

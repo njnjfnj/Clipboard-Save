@@ -5,28 +5,26 @@ CBS::CBS(QWidget *parent) : QWidget(parent) {
     isNotify = true;
     list = new CBIListView(model);
     isOverOtherApps = false;
+    dateLine = new QDateEdit(QDate::currentDate());
 
-
-
-    path = APPDIR + '/' + "data" + '/' +
-           QString::number(QDate::currentDate().year()) + '/' +
+    path = APPDIR + "/data/" +
+           QString::number(QDate::currentDate().year())  + '/' +
            QString::number(QDate::currentDate().month()) + '/' +
            QString::number(QDate::currentDate().day());
     d.mkpath(path);
 
-    dateLine = new QDateEdit(QDate::currentDate());
-
-    connect(qApp->clipboard(), SIGNAL(dataChanged()), this, SLOT(slotDataChanged()));
+    connect(qApp->clipboard(), &QClipboard::dataChanged, this, &CBS::slotDataChanged);
     connect(dateLine, &QDateEdit::dateChanged, model, &CBIListModel::slotDateChanged);
 
     showHide = new QAction("Show/Hide Window", this);
-    connect(showHide, SIGNAL(triggered()), this, SLOT(slotShowHideWindow()));
     onOffNotify = new QAction("On/Off Notify", this);
-    connect(onOffNotify, SIGNAL(triggered()), this, SLOT(slotOnOffNotify()));
     quitWindow = new QAction("Close", this);
-    connect(quitWindow, SIGNAL(triggered()), qApp, SLOT(quit()));
     setOverOtherApps = new QAction("+/- on top function");
-    connect(setOverOtherApps, SIGNAL(triggered()), this, SLOT(slotOverOtherApps()));
+
+    connect(showHide, &QAction::triggered, this, &CBS::slotShowHideWindow);
+    connect(onOffNotify, &QAction::triggered, this, &CBS::slotOnOffNotify);
+    connect(quitWindow, &QAction::triggered, qApp, &QApplication::quit);
+    connect(setOverOtherApps, &QAction::triggered, this, &CBS::slotOverOtherApps);
 
     trayMenu = new QMenu(this);
     trayMenu->addAction(showHide);
@@ -35,8 +33,11 @@ CBS::CBS(QWidget *parent) : QWidget(parent) {
     trayMenu->addSeparator();
     trayMenu->addAction(quitWindow);
 
+    QIcon icon(APPDIR + "/ico.png");
+    //icon.addPixmap(QString("/ico.png"));
+
     tray = new QSystemTrayIcon(this);
-    tray->setIcon(QPixmap(APPDIR + "/ico.png"));
+    tray->setIcon(icon);
     tray->setContextMenu(trayMenu);
     tray->setToolTip("Clipboard-Save Tray");
     tray->show();
@@ -49,14 +50,14 @@ CBS::CBS(QWidget *parent) : QWidget(parent) {
     m->addSeparator();
     m->addSeparator();
     m->addAction(quitWindow);
-    connect(m, SIGNAL(triggered(QAction*)), this, SLOT(slotMenuTriggered(QAction*)));
+    connect(m, &QMenu::triggered, this, &CBS::slotMenuTriggered);
 
-    QVBoxLayout* vbl = new QVBoxLayout;
+    vbl = new QVBoxLayout;
     vbl->addWidget(list);
     vbl->addWidget(dateLine);
     setLayout(vbl);
 
-    setWindowIcon(QIcon(APPDIR + "/ico.png"));
+    setWindowIcon(icon);
     setGeometry(-1, 30, 300, 370);
     setWindowTitle("Clipboard-Save");
     setToolTip("double click = hide window");
@@ -78,4 +79,21 @@ CBS::~CBS() {
     delete onOffNotify;
     delete quitWindow;
     delete setOverOtherApps;
+}
+
+void CBS::NextBackDay(bool state) {
+    QDate temp = dateLine->date();
+    if(state) {
+        temp = temp.addDays(1);
+        dateLine->setDate(temp);
+    } else {
+        temp = temp.addDays(-1);
+        dateLine->setDate(temp);
+    }
+    list->setCurrentIndex(model->index(0));
+}
+
+void CBS::setCurrentDate() {
+    dateLine->setDate(QDate::currentDate());
+    list->setCurrentIndex(model->index(0));
 }

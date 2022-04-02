@@ -1,0 +1,1 @@
+qDebug() << QDir::currentPath() + "/ico.png";

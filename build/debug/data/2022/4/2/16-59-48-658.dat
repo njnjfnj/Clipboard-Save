@@ -1,0 +1,4 @@
+
+CBIListView::~CBIListView() {
+    delete m;
+}

@@ -32,8 +32,4 @@ void CBS::contextMenuEvent(QContextMenuEvent *ev) {
     m->exec(ev->globalPos());
 }
 
-void CBS::mouseDoubleClickEvent(QMouseEvent *ev) {
-    Q_UNUSED(ev)
-    hide();
-}
 

@@ -8,13 +8,13 @@ Q_GADGET
     QTime   t;
     QString data;
 public:
-    explicit CBI         ();
-    explicit CBI         (QString copyData, QTime copyTime);
+    explicit CBI                (                                   );
+    explicit CBI                (QString copyData, QTime copyTime   );
 
-    QTime Time  () const;
-    QString Data() const;
+    QTime Time                  (                                   ) const;
+    QString Data                (                                   ) const;
 
-    friend bool operator == (const CBI& first, const CBI& second);
+    friend bool operator ==     (const CBI& first, const CBI& second);
 };
 
 #endif // CBI_H
