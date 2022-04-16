@@ -8,6 +8,7 @@ class CBIListView;
 class CBS : public QWidget {
     Q_OBJECT
 private:
+    QSettings*          settings;
     QVBoxLayout*        vbl;
     QDateEdit*          dateLine;
     CBIListModel*       model;

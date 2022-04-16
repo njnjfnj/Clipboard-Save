@@ -1,0 +1,3 @@
+settings->beginGroup("/Settings");
+    isNotify = settings->value("/Notify", false).toBool();
+    settings->endGroup();

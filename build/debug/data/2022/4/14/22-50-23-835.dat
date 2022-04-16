@@ -1,0 +1,20 @@
+#include "cbs.h"
+
+CBIListView::CBIListView(CBIListModel* model, QWidget* qw) : QListView(qw) {
+    m = new QMenu(this);
+    CBIModel = model;
+    setModel(CBIModel);
+
+    m->addAction("Info...");
+    m->addAction("Copy");
+    m->addSeparator();
+    m->addAction("Delete");
+
+    connect(m, &QMenu::triggered, this, &CBIListView::slotMenuTriggered);
+    connect(this, &CBIListView::doubleClicked, this, &CBIListView::slotItemDoubleClicked);
+    setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+}
+
+CBIListView::~CBIListView() {
+    delete m;
+}

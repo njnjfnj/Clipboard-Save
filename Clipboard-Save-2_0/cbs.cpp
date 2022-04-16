@@ -1,11 +1,15 @@
 #include "cbs.h"
 
 CBS::CBS(QWidget *parent) : QWidget(parent) {
+    settings = new QSettings("ToTUsE", "CBS");
     model = new CBIListModel(QDate::currentDate());
-    isNotify = true;
     list = new CBIListView(model);
     isOverOtherApps = false;
     dateLine = new QDateEdit(QDate::currentDate());
+
+    settings->beginGroup("/Settings");
+    isNotify = settings->value("/Notify", false).toBool();
+    settings->endGroup();
 
     path = APPDIR + "/data/" +
            QString::number(QDate::currentDate().year())  + '/' +
@@ -34,7 +38,6 @@ CBS::CBS(QWidget *parent) : QWidget(parent) {
     trayMenu->addAction(quitWindow);
 
     QIcon icon(APPDIR + "/ico.png");
-    //icon.addPixmap(QString("/ico.png"));
 
     tray = new QSystemTrayIcon(this);
     tray->setIcon(icon);
@@ -57,8 +60,11 @@ CBS::CBS(QWidget *parent) : QWidget(parent) {
     vbl->addWidget(dateLine);
     setLayout(vbl);
 
+    settings->beginGroup("/Settings");
+    setGeometry(settings->value("/X", -1).toInt(), settings->value("/Y", -1).toInt(), 300, 370);
+    settings->endGroup();
+
     setWindowIcon(icon);
-    setGeometry(-1, 30, 300, 370);
     setWindowTitle("Clipboard-Save");
     setToolTip("double click = hide window");
     list->setToolTip("Double click or ENTER = copy item");
@@ -68,17 +74,11 @@ CBS::CBS(QWidget *parent) : QWidget(parent) {
 }
 
 CBS::~CBS() {
-    delete dateLine;
-    delete model;
-    delete list;
-    delete tray;
-    delete trayMenu;
-    delete m;
-    delete vbl;
-    delete showHide;
-    delete onOffNotify;
-    delete quitWindow;
-    delete setOverOtherApps;
+    settings->beginGroup("/Settings");
+        settings->setValue("/X", x());
+        settings->setValue("/Y", y());
+    settings->endGroup();
+    settings->sync();
 }
 
 void CBS::NextBackDay(bool state) {

@@ -20,7 +20,13 @@ void CBS::slotDataChanged() {
 }
 
 void CBS::slotShowHideWindow(){ setVisible(!isVisible()); }
-void CBS::slotOnOffNotify() { isNotify = !isNotify; }
+void CBS::slotOnOffNotify() {
+    isNotify = !isNotify;
+    settings->beginGroup("/Settings");
+    settings->setValue("/Notify", isNotify);
+    settings->endGroup();
+    settings->sync();
+}
 
 void CBS::slotMenuTriggered(QAction* a) {
     if(a->text() == "hide window") hide();

@@ -59,8 +59,7 @@ void CBIListView::slotMenuTriggered(QAction* ac) {
 // Events
 void CBIListView::keyPressEvent(QKeyEvent *ev) {
     int key = ev->key();
-           if(key == Qt::Key_Delete && currentIndex().isValid()                                            ){ CBIModel->deleteCBI(currentIndex().row());
-    } else if(key == Qt::Key_Return && currentIndex().isValid()                                            ){ qApp->clipboard()->setText(CBIModel->getCBI(currentIndex()).Data());
+           if(key == Qt::Key_Return && currentIndex().isValid()                                            ){ qApp->clipboard()->setText(CBIModel->getCBI(currentIndex()).Data());
     } else if(key == Qt::Key_Up     && currentIndex().isValid() &&  currentIndex().row() != 0              ){ setCurrentIndex(CBIModel->index(currentIndex().row() - 1, 0));
     } else if(key == Qt::Key_Down   && currentIndex().isValid() &&  currentIndex().row() < CBIModel->Size()){ setCurrentIndex(CBIModel->index(currentIndex().row() + 1, 0));
     } else if(key == Qt::Key_Up     && !currentIndex().isValid() && !CBIModel->isEmpty()                   ){ setCurrentIndex(CBIModel->index(CBIModel->Size() - 1, 0));
