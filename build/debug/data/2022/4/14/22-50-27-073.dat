@@ -1,4 +1,0 @@
-// Slots
-void CBIListView::slotItemDoubleClicked(const QModelIndex& index) {
-    qApp->clipboard()->setText(CBIModel->getCBI(index).Data());
-}

@@ -1,5 +1,0 @@
-
-    trayMenu->addAction(showHide);
-    trayMenu->addAction(onOffNotify);
-    trayMenu->addAction(setOverOtherApps);
-    trayMenu->addSeparator();

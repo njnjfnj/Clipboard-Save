@@ -1,0 +1,7 @@
+
+    showHide = new QAction("Show/Hide Window", this);
+    onOffNotify = new QAction("On/Off Notify", this);
+    quitWindow = new QAction("Close", this);
+    setOverOtherApps = new QAction("+/- on top function");
+
+    connect(showHide, &QActi

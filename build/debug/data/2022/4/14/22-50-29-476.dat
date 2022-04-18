@@ -1,8 +1,0 @@
-            delete txt;
-            delete lbl;
-            delete vbl;
-            delete dio;
-        } else if (i == "Copy") {
-            qApp->clipboard()->setText(CBIModel->getCBI(currentIndex()).Data());
-        } else if (i == "Delete") {
-          

@@ -31,11 +31,11 @@ CBS::CBS(QWidget *parent) : QWidget(parent) {
     connect(setOverOtherApps, &QAction::triggered, this, &CBS::slotOverOtherApps);
 
     trayMenu = new QMenu(this);
-    trayMenu->addAction(showHide);
-    trayMenu->addAction(onOffNotify);
-    trayMenu->addAction(setOverOtherApps);
-    trayMenu->addSeparator();
     trayMenu->addAction(quitWindow);
+    trayMenu->addSeparator();
+    trayMenu->addAction(setOverOtherApps);
+    trayMenu->addAction(onOffNotify);
+    trayMenu->addAction(showHide);
 
     QIcon icon(APPDIR + "/ico.png");
 

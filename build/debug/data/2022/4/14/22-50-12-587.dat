@@ -1,8 +1,0 @@
-setStyleSheet(f.readAll());
-    f.close();
-
-    CBS w;
-    w.show();
-
-    return a.exec();
-}

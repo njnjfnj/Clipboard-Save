@@ -1,0 +1,5 @@
+connect(quitWindow, &QAction::triggered, qApp, &QApplication::quit);
+    connect(setOverOtherApps, &QAction::triggered, this, &CBS::slotOverOtherApps);
+
+    trayMenu = new QMenu(this);
+    trayM
