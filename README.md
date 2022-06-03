@@ -1,6 +1,8 @@
 # Clipboard-Save-2.0
 It is an application that automatically saves text from the clipboard for a long period.
+
 <hr>
+
 ![image](https://user-images.githubusercontent.com/95048103/171805090-d6df5f11-eb91-485b-bdec-b107539501e0.png)
 
  <-     : day back
